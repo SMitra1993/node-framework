@@ -1,0 +1,16 @@
+{
+  dataAccess: {
+    sessions: [
+      {
+        name: 'template',
+        type: 'SQLServer',
+        connectionString: '',
+        logQueries: false,
+        activeSite: true
+      }
+    ]
+  },
+  sessionCache: {
+    url: 'http://nordewmweb3:50180/auth/SessionData'
+  }
+}

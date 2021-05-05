@@ -1,0 +1,54 @@
+{
+  logs: {
+    logName: 'template',
+    logDirectory: 'C:\\Logs\\ServiceTemplate',
+    logLevel: 'debug'
+  },
+  xml: {
+    xmlDirectory: 'C:\\Logs\\ServiceTemplate\\XML',
+  },
+  service: {
+    name: 'Service Template',
+    port: 30000,
+    logRequests: true,
+    logResponses: true
+  },
+  dataAccess: {
+    sessions: [
+      {
+        name: 'mydbconn',
+        type: 'mssql',
+        connection: {
+          server: 'NORDINPSQL7',
+          user: 'tcs_offshore',
+          password: 'offshore123',
+          database: 'NEMSettlementsTCS2',
+          port: 23511,
+          requestTimeout: 2400000,
+          connectionTimeout: 2400000
+        }
+      },
+      {
+        name: 'oracleconn',
+        type: 'oracledb',
+        connection: {
+          host: 'NORTEWMDB02',
+          user: 'system',
+          password: 'Manager',
+          database: 'NEMT21'
+        }
+      }
+    ]
+  },
+  sessionCache: {
+    url: 'http://nordewmweb1:50180/auth/SessionData'
+  },
+  simms: {
+    market: [
+      'ALL',
+      'NEM',
+      'GSH'
+    ]
+    
+  }
+}

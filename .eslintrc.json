@@ -1,0 +1,124 @@
+{
+  "env": {
+    "es2021": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": ["@typescript-eslint", "no-null"],
+  "rules": {
+    // active
+    "@typescript-eslint/naming-convention": ["error"], // "class-name": true,
+    "spaced-comment": ["error", "always"], // "comment-format": [ true, "check-space" ]
+    "no-var": ["error"], // "no-var-keyword": true
+    "@typescript-eslint/quotes": [
+      // "quotemark": [ true, "single", "avoid-escape" ]
+      "error",
+      "single",
+      {
+        "avoidEscape": true //,
+        // "allowTemplateLiterals": true
+      }
+    ],
+    "@typescript-eslint/semi": ["error"], //"semicolon": [ true, "always", "ignore-bound-class-methods" ]
+    /*
+    "typedef-whitespace": [
+            true,
+            {
+                "call-signature": "nospace",
+                "index-signature": "nospace",
+                "parameter": "nospace",
+                "property-declaration": "nospace",
+                "variable-declaration": "nospace"
+            },
+            {
+                "call-signature": "onespace",
+                "index-signature": "onespace",
+                "parameter": "onespace",
+                "property-declaration": "onespace",
+                "variable-declaration": "onespace"
+            }
+        ]
+    */
+    "@typescript-eslint/type-annotation-spacing": [
+      "error",
+      {
+        "before": false,
+        "after": true
+      }
+    ],
+    "@typescript-eslint/prefer-namespace-keyword": ["error"], // "no-internal-module": true
+    "no-trailing-spaces": ["error"], // "no-trailing-whitespace": true
+    "no-null/no-null": ["error"], // "no-null-keyword": true,
+    /*
+    "one-line": [
+            true,
+            "check-open-brace",
+            "check-whitespace"
+        ]
+    */
+    "brace-style": ["error"],
+    "sort-keys": "off", // "object-literal-sort-keys": false,
+    "prefer-const": ["error"], // "prefer-const": true,
+    "@typescript-eslint/no-empty-interface": "off" // "no-empty-interface": false
+  }
+}
+
+// doubt
+// "import/order": ["error"] // "ordered-imports": [ false ],
+// "no-shadow": ["error", { "builtinGlobals": true, "hoist": "never", "allow": [] }], // "no-shadowed-variable": false,
+// "dot-notation": ["error", { "allowKeywords": true }], // "no-string-literal": false,
+// "@typescript-eslint/explicit-member-accessibility": "off" // "member-access": false,
+// "import/no-extraneous-dependencies": "off" // "no-implicit-dependencies": false,
+// "comma-dangle": ["error", "never"]
+/*
+"@typescript-eslint/no-empty-interface": [ // "no-empty-interface": false
+      "error",
+      {
+        "allowSingleExtends": true
+      }
+    ],
+*/
+// "@typescript-eslint/member-ordering": [ // "member-ordering": [ "fields-first" ],
+//   "error",
+//   { "default": ["public-instance-method", "public-static-field"] }
+// ]
+
+//new added
+// "no-irregular-whitespace": [
+//     "error",
+//     { "skipComments": false, "skipTemplates": false, "skipStrings": false }
+//   ],
+
+// "@typescript-eslint/no-inferrable-types": [
+//     "error",
+//     {
+//       "ignoreProperties": true,
+//       "ignoreParameters": true
+//     }
+//   ]
+
+// "@typescript-eslint/typedef": [
+//     "error",
+//     {
+//       "arrowParameter": false,
+//       "variableDeclaration": false
+//     }
+//   ]
+
+// "@typescript-eslint/no-non-null-assertion": "off"
+
+// "@typescript-eslint/no-var-requires": "off",
+
+// "@typescript-eslint/explicit-module-boundary-types": "off",
+
+// "@typescript-eslint/no-empty-function": "off"
