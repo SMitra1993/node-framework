@@ -1,8 +1,8 @@
 
 const IOCTYPES = {
-  DbManager: Symbol.for('DbManager'),
-  HelloDataLayer: Symbol.for('HelloDataLayer'),
-  HelloController: Symbol.for('HelloController')
+  dbManager: Symbol.for('DbManager'),
+  helloDataLayer: Symbol.for('HelloDataLayer'),
+  helloController: Symbol.for('HelloController')
 };
 
 export { IOCTYPES };

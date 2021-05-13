@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 import { getLogger } from 'log4js';
-import { IHello, IHelloChild } from '../common/interfaces/ihello';
+import { IHello } from '../common/interfaces/ihello';
 import { IHelloDataLayer } from '../common/interfaces/ihello-data-layer';
 import { IDbQueryable, IDbTransaction } from '../common/db/db-interface';
 import { HELLO_QUERIES } from './queries/hello-queries';

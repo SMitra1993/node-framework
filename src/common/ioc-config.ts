@@ -1,7 +1,5 @@
 import 'reflect-metadata';
 
-import { IDbManager } from './db/db-interface';
-import { DbManager } from './db/db-manager';
 import { IHelloDataLayer } from './interfaces/ihello-data-layer';
 import { HelloDataLayer } from '../data-layers/hello-data-layer';
 // import { ISettlementRunDataLayer } from './interfaces/data-layers/settlement/settlement-run/isettlement-run-data-layer';
@@ -19,6 +17,8 @@ import { HelloController } from '../controllers/hello-controller';
 import { IOCTYPES } from './ioc-types';
 
 import { Container } from 'inversify';
+import { IDbManager } from './config/idb-manager';
+import { DbManager } from './config/db-manager';
 // import { IPostDataLayer } from './interfaces/data-layers/settlement/post/ipost-data-layer';
 // import { IBatchjobInsertionForPaymentRunningController } from './interfaces/controllers/settlement/post/ibatch-job-insertion-payment-running-controller';
 // import { ICountFromBatchJobController } from './interfaces/controllers/settlement/post/icount-from-batchjob-controller';
@@ -528,9 +528,9 @@ import { Container } from 'inversify';
 
 const container = new Container();
 
-container.bind<IDbManager>(IOCTYPES.DbManager)
+container.bind<IDbManager>(IOCTYPES.dbManager)
   .to(DbManager);
-container.bind<IHelloDataLayer>(IOCTYPES.HelloDataLayer)
+container.bind<IHelloDataLayer>(IOCTYPES.helloDataLayer)
   .to(HelloDataLayer);
 // container.bind<IPostDataLayer>(IOCTYPES.PostDataLayer)
 //   .to(PostDataLayer);
@@ -540,7 +540,7 @@ container.bind<IHelloDataLayer>(IOCTYPES.HelloDataLayer)
 //   .to(PaymentDataLayer);
 // container.bind<INewReviewDataLayer>(IOCTYPES.NewReviewDataLayer)
 //   .to(NewReviewDataLayer);
-container.bind<IHelloController>(IOCTYPES.HelloController)
+container.bind<IHelloController>(IOCTYPES.helloController)
   .to(HelloController);
 // container.bind<IReviewDetailsController>(IOCTYPES.ReviewDetailsController)
 //   .to(ReviewDetailsController);

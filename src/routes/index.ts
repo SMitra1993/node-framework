@@ -1,14 +1,14 @@
-import { Router } from "express";
-import { IController } from "../common/interfaces/icontroller";
-import { IHelloController } from "../common/interfaces/ihello-controller";
-import { HttpMethod } from "../common/interfaces/http-method";
-import { getLogger } from "log4js";
-import { container } from "../common/ioc-config";
-import { IOCTYPES } from "../common/ioc-types";
+import { Router } from 'express';
+import { IController } from '../common/interfaces/icontroller';
+import { IHelloController } from '../common/interfaces/ihello-controller';
+import { HttpMethod } from '../common/interfaces/http-method';
+import { getLogger } from 'log4js';
+import { container } from '../common/ioc-config';
+import { IOCTYPES } from '../common/ioc-types';
 
 const router = Router();
 const logger = getLogger();
-logger.info("Registering routes");
+logger.info('Registering routes');
 
 function registerRoute(router: Router, controller: IController) {
   logger.info(`Registering controller ${controller.routeName}`);
@@ -56,7 +56,7 @@ function registerRoute(router: Router, controller: IController) {
 }
 
 const helloController = container.get<IHelloController>(
-  IOCTYPES.HelloController
+  IOCTYPES.helloController
 );
 
 registerRoute(router, helloController);
