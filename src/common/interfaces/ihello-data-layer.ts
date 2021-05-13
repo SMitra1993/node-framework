@@ -1,26 +1,17 @@
 import { IHello } from './ihello';
 import { IDbTransaction, IDbQueryable } from '../db/db-interface';
+import { MongoClient } from 'mongodb';
 
 export interface IHelloDataLayer {
-  save(
-    trx: IDbTransaction,
-    hello: IHello
-  ): Promise<number>;
+  getBillingDetails(client: MongoClient): Promise<any>;
 
-  getHello(
-    queryable: IDbQueryable,
-    name: string
-  ): Promise<IHello>;
+  save(trx: IDbTransaction, hello: IHello): Promise<number>;
 
-  filterHello(
-    queryable: IDbQueryable,
-    search: string
-  ): Promise<IHello[]>;
+  getHello(queryable: IDbQueryable, name: string): Promise<IHello>;
 
-  executeOracle(
-    queryable: IDbQueryable,
-    id: string
-  ): Promise<string[]>;
+  filterHello(queryable: IDbQueryable, search: string): Promise<IHello[]>;
+
+  executeOracle(queryable: IDbQueryable, id: string): Promise<string[]>;
 
   executeSQLSP(queryable: IDbQueryable): Promise<any[]>;
 }

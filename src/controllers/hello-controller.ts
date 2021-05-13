@@ -63,16 +63,14 @@ export class HelloController implements IHelloController {
   execution(): (req: Request, res: Response)=> Promise<void> {
     return async (req: Request, res: Response): Promise<void> => {
       try {
-        let movie = undefined;
         const client = await this.dbManager.createDbClient().connect();
         const responseMessage = 'Data retrieved successfully';
-        const collection = client.db('transaction').collection('billingDetails');
-        const query = { gstinNumber: '21AAAAAA0000A1Z5' };
+        // const collection = client.db('testdb').collection('userDetails');
+        // const query = { gstinNumber: '21AAAAAA0000A1Z5' };
         // movie = await collection.findOne(query);
-        movie = await collection.findOne(query);
-        res.status(200).json(
-          responseWrapper(responseMessage, movie)
-        );
+        // movie = await collection.insertOne(req.body);
+        const results = await this.helloDataLayer.getBillingDetails(client);
+        res.status(200).json(responseWrapper(responseMessage, results));
       } catch (err) {
         this.logger.info('Error: ' + `${JSON.stringify(err)}`);
         // await trxOracle.rollback();
