@@ -52,7 +52,7 @@ app.use((req, res, next) => {
 });
 
 app.use(cors());
-app.use('/api/v1/simms', router);
+app.use('/api/v1', router);
 
 app.use((err: JsonSchemaValidation, req: any, res: any, next: any) => {
   let responseData;

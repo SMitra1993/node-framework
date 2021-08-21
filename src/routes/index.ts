@@ -5,6 +5,7 @@ import { HttpMethod } from '../common/interfaces/http-method';
 import { getLogger } from 'log4js';
 import { container } from '../common/ioc-config';
 import { IOCTYPES } from '../common/ioc-types';
+import { IMyProfileController } from '../common/interfaces/controllers/imy-profile-controller';
 
 const router = Router();
 const logger = getLogger();
@@ -17,7 +18,7 @@ function registerRoute(router: Router, controller: IController) {
       router.get(
         controller.routeName,
         // controller.authorisation(),
-        controller.requestAndSchemaValidation(),
+        // controller.requestAndSchemaValidation(),
         controller.businessValidation(),
         controller.execution()
       );
@@ -58,7 +59,11 @@ function registerRoute(router: Router, controller: IController) {
 const helloController = container.get<IHelloController>(
   IOCTYPES.helloController
 );
+const myProfileController = container.get<IMyProfileController>(
+  IOCTYPES.myProfileController
+);
 
 registerRoute(router, helloController);
+registerRoute(router, myProfileController);
 
 export { router };
