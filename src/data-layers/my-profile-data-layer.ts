@@ -7,9 +7,9 @@ import { IMyProfileDataLayer } from '../common/interfaces/data-layers/imy-profil
 export class MyProfileDataLayer implements IMyProfileDataLayer {
   private logger = getLogger();
 
-  async getMyProfileDetails(client: MongoClient): Promise<any> {
-    const collection = client.db('transaction').collection('billingDetails');
-    const query = { gstinNumber: '21AAAAAA0000A1Z5' };
+  async getMyProfileDetails(userId: string, client: MongoClient): Promise<any> {
+    const collection = client.db('transaction').collection('userDetails');
+    const query = { userId: userId };
     // movie = await collection.findOne(query);
     const queryResult = await collection.findOne(query);
 
