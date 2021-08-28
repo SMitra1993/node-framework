@@ -52,7 +52,7 @@ export class MyProfileController implements IMyProfileController {
           try {
             const client = await this._dbManager.createDbClient().connect();
             const responseMessage = 'Data retrieved successfully';
-            const results = await this._myProfileDataLayer.getMyProfileDetails(client);
+            const results = await this._myProfileDataLayer.getMyProfileDetails(req.params.userId, client);
             res.status(200).json(responseWrapper(responseMessage, results));
           } catch (err) {
             this.logger.info('Error: ' + `${JSON.stringify(err)}`);
