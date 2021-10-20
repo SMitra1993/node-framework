@@ -6,6 +6,7 @@ import { getLogger } from 'log4js';
 import { container } from '../common/ioc-config';
 import { IOCTYPES } from '../common/ioc-types';
 import { IMyProfileController } from '../common/interfaces/controllers/imy-profile-controller';
+import { ILoginController } from '../common/interfaces/controllers/ilogin-controller';
 
 const router = Router();
 const logger = getLogger();
@@ -17,8 +18,8 @@ function registerRoute(router: Router, controller: IController) {
     case HttpMethod.Get:
       router.get(
         controller.routeName,
-        // controller.authorisation(),
-        // controller.requestAndSchemaValidation(),
+        controller.authorisation(),
+        controller.requestAndSchemaValidation(),
         controller.businessValidation(),
         controller.execution()
       );
@@ -26,7 +27,7 @@ function registerRoute(router: Router, controller: IController) {
     case HttpMethod.Post:
       router.post(
         controller.routeName,
-        // controller.authorisation(),
+        controller.authorisation(),
         controller.requestAndSchemaValidation(),
         controller.businessValidation(),
         controller.execution()
@@ -35,7 +36,7 @@ function registerRoute(router: Router, controller: IController) {
     case HttpMethod.Put:
       router.put(
         controller.routeName,
-        // controller.authorisation(),
+        controller.authorisation(),
         controller.requestAndSchemaValidation(),
         controller.businessValidation(),
         controller.execution()
@@ -44,7 +45,7 @@ function registerRoute(router: Router, controller: IController) {
     case HttpMethod.Delete:
       router.delete(
         controller.routeName,
-        // controller.authorisation(),
+        controller.authorisation(),
         controller.requestAndSchemaValidation(),
         controller.businessValidation(),
         controller.execution()
@@ -62,8 +63,12 @@ const helloController = container.get<IHelloController>(
 const myProfileController = container.get<IMyProfileController>(
   IOCTYPES.myProfileController
 );
+const loginController = container.get<ILoginController>(
+  IOCTYPES.loginController
+);
 
 registerRoute(router, helloController);
 registerRoute(router, myProfileController);
+registerRoute(router, loginController);
 
 export { router };

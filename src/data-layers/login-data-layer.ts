@@ -1,10 +1,10 @@
 import { injectable } from 'inversify';
 import { getLogger } from 'log4js';
 import { MongoClient } from 'mongodb';
-import { IMyProfileDataLayer } from '../common/interfaces/data-layers/imy-profile-data-layer';
+import { ILoginDataLayer } from '../common/interfaces/data-layers/ilogin-data-layer';
 
 @injectable()
-export class MyProfileDataLayer implements IMyProfileDataLayer {
+export class LoginDataLayer implements ILoginDataLayer {
   private logger = getLogger();
 
   async getMyProfileDetails(userId: string, client: MongoClient): Promise<any> {

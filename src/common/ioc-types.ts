@@ -4,7 +4,9 @@ const IOCTYPES = {
   helloDataLayer: Symbol.for('HelloDataLayer'),
   helloController: Symbol.for('HelloController'),
   myProfileController: Symbol.for('MyProfileController'),
-  myProfileDataLayer: Symbol.for('MyProfileDataLayer')
+  loginController: Symbol.for('LoginController'),
+  myProfileDataLayer: Symbol.for('MyProfileDataLayer'),
+  loginDataLayer: Symbol.for('LoginDataLayer')
 };
 
 export { IOCTYPES };

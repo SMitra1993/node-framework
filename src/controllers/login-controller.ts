@@ -1,32 +1,25 @@
 import { inject, injectable } from 'inversify';
 import { IDbManager } from '../common/config/idb-manager';
-import { IHelloDataLayer } from '../common/interfaces/ihello-data-layer';
 import { IOCTYPES } from '../common/ioc-types';
-import { IMyProfileController } from '../common/interfaces/controllers/imy-profile-controller';
 import { HttpMethod } from '../common/interfaces/http-method';
 import { validate } from 'express-jsonschema';
 import { responseWrapper, errorWrapper } from '../utils/response-wrapper';
 import { NextFunction } from 'connect';
 import { Request, Response } from 'express';
 import { getLogger } from 'log4js';
-import { myProfileSchema } from '../validators/my-profile';
 import { JSONSchema4 } from 'json-schema';
-import { IMyProfileDataLayer } from '../common/interfaces/data-layers/imy-profile-data-layer';
+import { ILoginController } from '../common/interfaces/controllers/ilogin-controller';
+import { ILoginDataLayer } from '../common/interfaces/data-layers/ilogin-data-layer';
+import { loginSchema } from '../validators/login';
 import * as jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 
 @injectable()
-export class MyProfileController implements IMyProfileController {
+export class LoginController implements ILoginController {
   constructor(
     @inject(IOCTYPES.dbManager) private _dbManager: IDbManager,
-    @inject(IOCTYPES.myProfileDataLayer)
-    private _myProfileDataLayer: IMyProfileDataLayer
+    @inject(IOCTYPES.loginDataLayer) private _loginDataLayer: ILoginDataLayer
   ) {}
-
-  private logger = getLogger();
-
-  routeName = '/my-profile-details/:userId';
-  method: HttpMethod = HttpMethod.Get;
 
   authorisation(): (
     req: Request,
@@ -38,34 +31,21 @@ export class MyProfileController implements IMyProfileController {
       res: Response,
       next: NextFunction
     ): Promise<void> => {
-      const authHeader = req.headers['authorization'];
-      const token = authHeader && authHeader.split(' ')[0];
-      if (token == undefined) res.sendStatus(401);
-      jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-        if (err) {
-          res.status(401).json(
-            errorWrapper([
-              {
-                statusCode: 500,
-                name: 'Unexpected error',
-                message: `UnexpectedError: [${err}]`,
-              },
-            ])
-          );
-        } else {
-          req.body.user = user;
-          next();
-        }
-      });
+      next();
     };
   }
+
+  private logger = getLogger();
+
+  routeName = '/login';
+  method: HttpMethod = HttpMethod.Post;
 
   requestAndSchemaValidation(): (
     req: Request,
     res: Response,
     next: NextFunction
   )=> void {
-    return validate({ params: myProfileSchema as JSONSchema4 });
+    return validate({ body: loginSchema as JSONSchema4 });
   }
 
   businessValidation(): (
@@ -85,13 +65,13 @@ export class MyProfileController implements IMyProfileController {
   execution(): (req: Request, res: Response)=> Promise<void> {
     return async (req: Request, res: Response): Promise<void> => {
       try {
-        const client = await this._dbManager.createDbClient().connect();
-        const responseMessage = 'Data retrieved successfully';
-        const results = await this._myProfileDataLayer.getMyProfileDetails(
-          req.params.userId,
-          client
+        dotenv.config({ path: process.env.ACCESS_TOKEN_SECRET });
+        const responseMessage = 'Token retrieved successfully';
+        const accessToken = jwt.sign(
+          { name: req.body.userId },
+          process.env.ACCESS_TOKEN_SECRET
         );
-        res.status(200).json(responseWrapper(responseMessage, results));
+        res.status(200).json(responseWrapper(responseMessage, accessToken));
       } catch (err) {
         this.logger.info('Error: ' + `${JSON.stringify(err)}`);
         // await trxOracle.rollback();

@@ -22,6 +22,19 @@ export class HelloController implements IHelloController {
 
   private logger = getLogger();
 
+  authorisation(): (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  )=> Promise<void> {
+    return async (
+      req: Request,
+      res: Response,
+      next: NextFunction
+    ): Promise<void> => {
+      next();
+    };
+  }
   // authoriseOptions: AuthoriseOptions = {
   //   entity: 'MMS_SRA',
   //   accessOperation: AccessOperation.Any,

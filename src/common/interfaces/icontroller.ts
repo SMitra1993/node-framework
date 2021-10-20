@@ -6,8 +6,8 @@ export interface IController {
   method: HttpMethod;
   routeName: string;
 
-  // authorisation(): (req: Request, res: Response, next: NextFunction) => Promise<void>;
-  requestAndSchemaValidation(): (req: Request, res: Response, next: NextFunction) => void;
-  businessValidation(): (req: Request, res: Response, next: NextFunction) => Promise<void>;
-  execution(): (req: Request, res: Response) => Promise<void>;
+  authorisation(): (req: Request, res: Response, next: NextFunction)=> Promise<void>;
+  requestAndSchemaValidation(): (req: Request, res: Response, next: NextFunction)=> void;
+  businessValidation(): (req: Request, res: Response, next: NextFunction)=> Promise<void>;
+  execution(): (req: Request, res: Response)=> Promise<void>;
 }

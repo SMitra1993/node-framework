@@ -1,6 +1,6 @@
 import expressHttpContext from 'express-http-context';
 import uuid from 'uuid';
-import os, { userInfo } from 'os';
+import os from 'os';
 import express from 'express';
 import compression from 'compression';
 import { configure, getLogger } from 'log4js';
@@ -18,8 +18,21 @@ const logFileDirectory = config.get('logs.logDirectory');
 const logLevel = config.get('logs.logLevel') as string;
 
 configure({
-  appenders: { default: { type: 'dateFile', filename: `${logFileDirectory}\\${logName}.${os.hostname()}.log`, pattern: 'yyyyMMdd', keepFileExt: true, alwaysIncludePattern: true } },
-  categories: { default: { appenders: ['default'], level: logLevel == null ? 'info' : logLevel } }
+  appenders: {
+    default: {
+      type: 'dateFile',
+      filename: `${logFileDirectory}\\${logName}.${os.hostname()}.log`,
+      pattern: 'yyyyMMdd',
+      keepFileExt: true,
+      alwaysIncludePattern: true,
+    },
+  },
+  categories: {
+    default: {
+      appenders: ['default'],
+      level: logLevel == undefined ? 'info' : logLevel,
+    },
+  },
 });
 
 const servicePort = config.get('service.port');
@@ -28,6 +41,7 @@ const app = express();
 
 // Using compression
 app.use(compression());
+app.use(express.json());
 // Best to use Helmet first
 app.use(helmet());
 // Accept and parse request body to JSON
@@ -46,7 +60,7 @@ app.use((req, res, next) => {
     params: req.params,
     path: req.path,
     query: req.query,
-    body: req.body
+    body: req.body,
   });
   next();
 });
@@ -58,7 +72,6 @@ app.use((err: JsonSchemaValidation, req: any, res: any, next: any) => {
   let responseData;
 
   if (err.name === 'JsonSchemaValidation') {
-
     // Set a bad request http response status or whatever you want
     const statusCode = 400;
     res.status(statusCode);
@@ -66,7 +79,7 @@ app.use((err: JsonSchemaValidation, req: any, res: any, next: any) => {
       return {
         statusCode: 400,
         name: err.name,
-        message: x
+        message: x,
       };
     });
 

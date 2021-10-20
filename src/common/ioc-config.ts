@@ -14,16 +14,24 @@ import { MyProfileController } from '../controllers/my-profile-controller';
 import { IMyProfileController } from './interfaces/controllers/imy-profile-controller';
 import { IMyProfileDataLayer } from './interfaces/data-layers/imy-profile-data-layer';
 import { MyProfileDataLayer } from '../data-layers/my-profile-data-layer';
+import { ILoginController } from './interfaces/controllers/ilogin-controller';
+import { LoginController } from '../controllers/login-controller';
+import { ILoginDataLayer } from './interfaces/data-layers/ilogin-data-layer';
 const container = new Container();
 
-container.bind<IDbManager>(IOCTYPES.dbManager)
-  .to(DbManager);
-container.bind<IHelloDataLayer>(IOCTYPES.helloDataLayer)
-  .to(HelloDataLayer);
-container.bind<IHelloController>(IOCTYPES.helloController)
-  .to(HelloController);
-container.bind<IMyProfileController>(IOCTYPES.myProfileController)
+container.bind<IDbManager>(IOCTYPES.dbManager).to(DbManager);
+container.bind<IHelloDataLayer>(IOCTYPES.helloDataLayer).to(HelloDataLayer);
+container.bind<IHelloController>(IOCTYPES.helloController).to(HelloController);
+container
+  .bind<IMyProfileController>(IOCTYPES.myProfileController)
   .to(MyProfileController);
-container.bind<IMyProfileDataLayer>(IOCTYPES.myProfileDataLayer)
+container
+  .bind<ILoginController>(IOCTYPES.loginController)
+  .to(LoginController);
+container
+  .bind<IMyProfileDataLayer>(IOCTYPES.myProfileDataLayer)
+  .to(MyProfileDataLayer);
+container
+  .bind<ILoginDataLayer>(IOCTYPES.loginDataLayer)
   .to(MyProfileDataLayer);
 export { container };
