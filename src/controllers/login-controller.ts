@@ -13,6 +13,7 @@ import { ILoginDataLayer } from '../common/interfaces/data-layers/ilogin-data-la
 import { loginSchema } from '../validators/login';
 import * as jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import * as bcrypt from 'bcryptjs';
 
 @injectable()
 export class LoginController implements ILoginController {
@@ -65,13 +66,39 @@ export class LoginController implements ILoginController {
   execution(): (req: Request, res: Response)=> Promise<void> {
     return async (req: Request, res: Response): Promise<void> => {
       try {
+        const client = await this._dbManager.createDbClient().connect();
         dotenv.config({ path: process.env.ACCESS_TOKEN_SECRET });
-        const responseMessage = 'Token retrieved successfully';
-        const accessToken = jwt.sign(
-          { name: req.body.userId },
-          process.env.ACCESS_TOKEN_SECRET
+        let responseMessage = '';
+        let isValid = false;
+        const results = await this._loginDataLayer.verifyUserDetail(
+          req.body.userId,
+          client
         );
-        res.status(200).json(responseWrapper(responseMessage, accessToken));
+        if (results) {
+          isValid = await bcrypt.compare(results.password, req.body.password);
+        }
+
+        let accessToken = '';
+        let userDetails = {};
+        if (isValid) {
+          responseMessage = 'Token retrieved successfully';
+          accessToken = jwt.sign(
+            { name: req.body.userId },
+            process.env.ACCESS_TOKEN_SECRET
+          );
+          userDetails = {
+            token: accessToken,
+            userId: results.emailId,
+          };
+          res.status(200).json(responseWrapper(responseMessage, userDetails));
+        } else {
+          userDetails = {
+            token: accessToken,
+            userId: results?.emailId,
+          };
+          responseMessage = 'Unauthorized user';
+          res.status(401).json(responseWrapper(responseMessage, userDetails));
+        }
       } catch (err) {
         this.logger.info('Error: ' + `${JSON.stringify(err)}`);
         // await trxOracle.rollback();

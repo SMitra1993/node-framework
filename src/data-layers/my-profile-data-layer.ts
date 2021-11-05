@@ -17,6 +17,6 @@ export class MyProfileDataLayer implements IMyProfileDataLayer {
       return queryResult;
     }
 
-    return null;
+    return undefined;
   }
 }

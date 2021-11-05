@@ -17,6 +17,7 @@ import { MyProfileDataLayer } from '../data-layers/my-profile-data-layer';
 import { ILoginController } from './interfaces/controllers/ilogin-controller';
 import { LoginController } from '../controllers/login-controller';
 import { ILoginDataLayer } from './interfaces/data-layers/ilogin-data-layer';
+import { LoginDataLayer } from '../data-layers/login-data-layer';
 const container = new Container();
 
 container.bind<IDbManager>(IOCTYPES.dbManager).to(DbManager);
@@ -33,5 +34,5 @@ container
   .to(MyProfileDataLayer);
 container
   .bind<ILoginDataLayer>(IOCTYPES.loginDataLayer)
-  .to(MyProfileDataLayer);
+  .to(LoginDataLayer);
 export { container };
