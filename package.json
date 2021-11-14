@@ -42,6 +42,7 @@
     "log4js": "^4.0.2",
     "moment": "^2.24.0",
     "mongodb": "^3.6.11",
+    "mongoose": "^6.0.12",
     "mssql": "^5.1.0",
     "node-cache": "^4.2.1",
     "oracledb": "^4.1.2",

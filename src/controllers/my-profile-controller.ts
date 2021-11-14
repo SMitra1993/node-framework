@@ -1,6 +1,5 @@
 import { inject, injectable } from 'inversify';
 import { IDbManager } from '../common/config/idb-manager';
-import { IHelloDataLayer } from '../common/interfaces/ihello-data-layer';
 import { IOCTYPES } from '../common/ioc-types';
 import { IMyProfileController } from '../common/interfaces/controllers/imy-profile-controller';
 import { HttpMethod } from '../common/interfaces/http-method';
@@ -13,7 +12,6 @@ import { myProfileSchema } from '../validators/my-profile';
 import { JSONSchema4 } from 'json-schema';
 import { IMyProfileDataLayer } from '../common/interfaces/data-layers/imy-profile-data-layer';
 import * as jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
 
 @injectable()
 export class MyProfileController implements IMyProfileController {

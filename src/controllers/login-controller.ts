@@ -75,7 +75,7 @@ export class LoginController implements ILoginController {
           client
         );
         if (results) {
-          isValid = await bcrypt.compare(results.password, req.body.password);
+          isValid = await bcrypt.compare(results.password, req.header('password'));
         }
 
         let accessToken = '';
