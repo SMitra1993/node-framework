@@ -1,6 +1,6 @@
-import { MongoClient } from 'mongodb';
+// import { MongoClient } from 'mongodb';
 
 export interface ILoginDataLayer {
-  verifyUserDetail(userId: string, client: MongoClient): Promise<any>;
+  verifyUserDetail(userId: string): Promise<any>;
 
 }

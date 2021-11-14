@@ -12,6 +12,7 @@ import { myProfileSchema } from '../validators/my-profile';
 import { JSONSchema4 } from 'json-schema';
 import { IMyProfileDataLayer } from '../common/interfaces/data-layers/imy-profile-data-layer';
 import * as jwt from 'jsonwebtoken';
+import mongoose from 'mongoose';
 
 @injectable()
 export class MyProfileController implements IMyProfileController {
@@ -83,11 +84,10 @@ export class MyProfileController implements IMyProfileController {
   execution(): (req: Request, res: Response)=> Promise<void> {
     return async (req: Request, res: Response): Promise<void> => {
       try {
-        const client = await this._dbManager.createDbClient().connect();
+        await this._dbManager.createDbClient();
         const responseMessage = 'Data retrieved successfully';
         const results = await this._myProfileDataLayer.getMyProfileDetails(
-          req.params.userId,
-          client
+          req.params.userId
         );
         res.status(200).json(responseWrapper(responseMessage, results));
       } catch (err) {

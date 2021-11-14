@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import { IController } from '../common/interfaces/icontroller';
-import { IHelloController } from '../common/interfaces/ihello-controller';
 import { HttpMethod } from '../common/interfaces/http-method';
 import { getLogger } from 'log4js';
 import { container } from '../common/ioc-config';
@@ -57,9 +56,6 @@ function registerRoute(router: Router, controller: IController) {
   }
 }
 
-const helloController = container.get<IHelloController>(
-  IOCTYPES.helloController
-);
 const myProfileController = container.get<IMyProfileController>(
   IOCTYPES.myProfileController
 );
@@ -67,7 +63,6 @@ const loginController = container.get<ILoginController>(
   IOCTYPES.loginController
 );
 
-registerRoute(router, helloController);
 registerRoute(router, myProfileController);
 registerRoute(router, loginController);
 

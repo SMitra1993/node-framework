@@ -1,10 +1,5 @@
 import 'reflect-metadata';
 
-import { IHelloDataLayer } from './interfaces/ihello-data-layer';
-import { HelloDataLayer } from '../data-layers/hello-data-layer';
-import { IHelloController } from './interfaces/ihello-controller';
-import { HelloController } from '../controllers/hello-controller';
-
 import { IOCTYPES } from './ioc-types';
 
 import { Container } from 'inversify';
@@ -21,8 +16,6 @@ import { LoginDataLayer } from '../data-layers/login-data-layer';
 const container = new Container();
 
 container.bind<IDbManager>(IOCTYPES.dbManager).to(DbManager);
-container.bind<IHelloDataLayer>(IOCTYPES.helloDataLayer).to(HelloDataLayer);
-container.bind<IHelloController>(IOCTYPES.helloController).to(HelloController);
 container
   .bind<IMyProfileController>(IOCTYPES.myProfileController)
   .to(MyProfileController);

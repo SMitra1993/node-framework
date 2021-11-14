@@ -1,14 +1,15 @@
 import { IDbManager } from './idb-manager';
-import mongodb from 'mongodb';
+// import mongodb from 'mongodb';
 import { injectable } from 'inversify';
+import mongoose from 'mongoose';
 
 @injectable()
 export class DbManager implements IDbManager {
-  public createDbClient(): mongodb.MongoClient {
+  public async createDbClient(): Promise<any> {
     const uri =
-      'mongodb://souvik:souvik@127.0.0.1:27017/admin?retryWrites=true&writeConcern=majority';
-      const client = new mongodb.MongoClient(uri, { useNewUrlParser: true });
+      'mongodb://localhost:27017/transaction';
+      // const client = new mongodb.MongoClient(uri, { useNewUrlParser: true });
 
-      return client;
+      return await mongoose.connect(uri);
   }
 }

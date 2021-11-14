@@ -14,6 +14,7 @@ import { loginSchema } from '../validators/login';
 import * as jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import * as bcrypt from 'bcryptjs';
+import mongoose from 'mongoose';
 
 @injectable()
 export class LoginController implements ILoginController {
@@ -66,16 +67,18 @@ export class LoginController implements ILoginController {
   execution(): (req: Request, res: Response)=> Promise<void> {
     return async (req: Request, res: Response): Promise<void> => {
       try {
-        const client = await this._dbManager.createDbClient().connect();
+        await this._dbManager.createDbClient();
         dotenv.config({ path: process.env.ACCESS_TOKEN_SECRET });
         let responseMessage = '';
         let isValid = false;
         const results = await this._loginDataLayer.verifyUserDetail(
-          req.body.userId,
-          client
+          req.body.userId
         );
         if (results) {
-          isValid = await bcrypt.compare(results.password, req.header('password'));
+          isValid = await bcrypt.compare(
+            results.password,
+            req.header('password')
+          );
         }
 
         let accessToken = '';
